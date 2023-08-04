@@ -31,16 +31,19 @@
             android:orientation="horizontal"
             >
             <ImageView
+                android:id="@+id/firstTable"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 app:srcCompat="@drawable/line1" />
             <ImageView
+                android:id="@+id/secondTable"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 app:srcCompat="@drawable/line2" />
             <ImageView
+                android:id="@+id/thirdTable"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
