@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <ImageView
+        android:id="@+id/main_theme"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/main_theme_belai"
+        />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/slots_wheel"
+        android:layout_width="350dp"
+        android:layout_height="300dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:orientation="horizontal"
+            >
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/line1" />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/line2" />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/line3" />
+        </LinearLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rec_slots"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:listitem="@layout/slot_icon" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+    <LinearLayout
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/square_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/slots_wheel">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/minusBet"
+            android:background="@android:color/transparent"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:text="-"
+            android:textSize="30sp"
+            android:textAlignment="center"
+            android:textColor="@color/green"
+            />
+        <TextView
+            android:id="@+id/currentBet"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:textSize="30sp"
+            android:textColor="@color/white"
+            android:textAlignment="center"
+            android:text="1"
+            android:layout_weight="1"
+            />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/plusBet"
+            android:background="@android:color/transparent"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:text="+"
+            android:textSize="30sp"
+            android:textAlignment="center"
+            android:textColor="@color/green"
+            />
+
+    </LinearLayout>
+
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/spinButton"
+        android:background="@drawable/square_button"
+        android:layout_width="140dp"
+        android:layout_height="48dp"
+        android:text="SPIN"
+        android:textSize="30sp"
+        android:textAlignment="center"
+        android:textColor="@color/green"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/slots_wheel"
+        android:layout_marginEnd="50dp"
+        android:layout_marginTop="40dp"
+        />
+
+    <TextView
+        android:id="@+id/scorePanel"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/golden_panel"
+        android:textColor="@color/black"
+        android:textAlignment="center"
+        android:text="500"
+        android:textSize="30dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginBottom="50dp"
+        />
+
+
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/golden_circle"
+        app:layout_constraintBottom_toBottomOf="@id/scorePanel"
+        app:layout_constraintTop_toTopOf="@+id/scorePanel"
+        app:layout_constraintEnd_toStartOf="@id/scorePanel"
+        app:layout_constraintStart_toStartOf="@id/scorePanel"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

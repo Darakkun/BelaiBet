@@ -1,3 +1,8 @@
 <resources>
-    <string name="app_name">BelaiBet</string>
+    <string name="app_name">BALEIA BET</string>
+
+    <string name="gameStart">Game start</string>
+    <string name="slots">Slots</string>
+    <string name="slotsResult">Result</string>
+
 </resources>
