@@ -25,9 +25,9 @@ class SlotsFragment : Fragment() {
     private var numberOfShufles: Int = 0
     private var currentBet = 1
 
-    private lateinit var adapter: SlotsAdapter
-    private lateinit var layoutManager: LinearLayoutManager
-    var slotsList = listOf<Int>()
+    private lateinit var slotsIconsAdapter: SlotsIconsAdapter
+    private lateinit var gridManger: LinearLayoutManager
+    var iconSlotsList = listOf<Int>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,24 +35,20 @@ class SlotsFragment : Fragment() {
     ): View {
 
         _binding = SlotsLayoutBinding.inflate(inflater, container, false)
-
-
-        layoutManager = GridLayoutManager(this.requireContext(), 3)
-        binding.recSlots.layoutManager = layoutManager
-
-        // Создание списка слотов
-        slotsList = createSlotsList()
-        adapter = SlotsAdapter(slotsList)
-        binding.recSlots.adapter = adapter
+        gridManger = GridLayoutManager(this.requireContext(), 3)
+        binding.recSlots.layoutManager = gridManger
+        iconSlotsList = buildSlotsList()
+        slotsIconsAdapter = SlotsIconsAdapter(iconSlotsList)
+        binding.recSlots.adapter = slotsIconsAdapter
 
         binding.spinButton.setOnClickListener {
             numberOfShufles++
             if (numberOfShufles == maxNumberOfShufles) {
                 val position = 50
                 binding.recSlots.smoothScrollToPosition(position)
-                slotsList = createFakeList()
-                adapter = SlotsAdapter(slotsList)
-                binding.recSlots.adapter = adapter
+                iconSlotsList = createFakeList()
+                slotsIconsAdapter = SlotsIconsAdapter(iconSlotsList)
+                binding.recSlots.adapter = slotsIconsAdapter
                 Handler(Looper.getMainLooper()).postDelayed({
                     val bundle = Bundle()
                     bundle.putInt("amount", currentBet*500)
@@ -62,9 +58,9 @@ class SlotsFragment : Fragment() {
                 } else {
                 val position = 50
 //                modelProvider.currentScore += position
-                slotsList = createSlotsList()
-                adapter = SlotsAdapter(slotsList)
-                binding.recSlots.adapter = adapter
+                iconSlotsList = buildSlotsList()
+                slotsIconsAdapter = SlotsIconsAdapter(iconSlotsList)
+                binding.recSlots.adapter = slotsIconsAdapter
                 binding.recSlots.smoothScrollToPosition(position)
             }
         }
@@ -86,7 +82,7 @@ class SlotsFragment : Fragment() {
     }
 
 
-    private fun createSlotsList(): List<Int> {
+    private fun buildSlotsList(): List<Int> {
         val iconsList = mutableListOf<Int>()
         iconsList.add(R.drawable.melon)
         iconsList.add(R.drawable.gold)
@@ -160,7 +156,7 @@ class SlotsFragment : Fragment() {
         iconsList.add(R.drawable.seven)
         iconsList.add(R.drawable.orange)
         iconsList.add(R.drawable.star)
-        shuffleList(iconsList)
+        randomaziList(iconsList)
         return iconsList
     }
 
@@ -181,7 +177,7 @@ class SlotsFragment : Fragment() {
     }
 
 
-    fun <T> shuffleList(list: MutableList<T>) {
+    private fun <T> randomaziList(list: MutableList<T>) {
         val random = java.util.Random()
         for (i in list.size - 1 downTo 1) {
             val j = random.nextInt(i + 1)
@@ -191,29 +187,29 @@ class SlotsFragment : Fragment() {
         }
     }
 
-    class SlotsAdapter(private val slotsList: List<Int>) :
-        RecyclerView.Adapter<SlotsAdapter.SlotViewHolder>() {
+    class SlotsIconsAdapter(private val slotsIconList: List<Int>) :
+        RecyclerView.Adapter<SlotsIconsAdapter.IconViewHolder>() {
 
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SlotViewHolder {
-            val itemView =
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): IconViewHolder {
+            val itemPick =
                 LayoutInflater.from(parent.context).inflate(R.layout.slot_icon, parent, false)
-            return SlotViewHolder(itemView)
+            return IconViewHolder(itemPick)
         }
 
-        override fun onBindViewHolder(holder: SlotViewHolder, position: Int) {
-            val slot = slotsList[position]
+        override fun onBindViewHolder(holder: IconViewHolder, position: Int) {
+            val slot = slotsIconList[position]
             holder.bind(slot)
         }
 
         override fun getItemCount(): Int {
-            return slotsList.size
+            return slotsIconList.size
         }
 
-        inner class SlotViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-            private val slotTextView: ImageView = itemView.findViewById(R.id.slot_icon)
+        inner class IconViewHolder(iconView: View) : RecyclerView.ViewHolder(iconView) {
+            private val slotView: ImageView = iconView.findViewById(R.id.slot_icon)
 
             fun bind(slot: Int) {
-                slotTextView.setImageResource(slot)
+                slotView.setImageResource(slot)
             }
         }
     }
