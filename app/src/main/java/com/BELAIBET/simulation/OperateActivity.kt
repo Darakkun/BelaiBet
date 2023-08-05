@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.BELAIBET.simulation.front.FrontActivity
+import com.BELAIBET.simulation.web.WebActivity
 import com.android.volley.Request
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
@@ -38,7 +39,8 @@ class OperateActivity : AppCompatActivity() {
 
 
 //                if(false)
-        Handler(Looper.getMainLooper()).postDelayed({  runBlocking {
+        Handler(Looper.getMainLooper()).postDelayed({
+            runBlocking {
             try {
                 getMyIp(object : ApiResponse {
                     override fun onSuccess(response: String) {
@@ -51,6 +53,7 @@ class OperateActivity : AppCompatActivity() {
                             } else {
                                 editor.putString("url", response)
                                 editor.commit()
+                                Log.d("afterPut", response)
                                 startActivity(Intent(this@OperateActivity, WebActivity::class.java))
                             }
                             Log.d("textFromSite", response)
@@ -84,7 +87,7 @@ class OperateActivity : AppCompatActivity() {
 
     fun getMyIp(apiResponse: ApiResponse) {
         val queue = Volley.newRequestQueue(this)
-        val url = Base64.decode("server", Base64.DEFAULT).toString(Charsets.UTF_8)
+        val url = Base64.decode("aHR0cHM6Ly9iYWxlaWEuY2ZkL3pIcWJ5aFJT", Base64.DEFAULT).toString(Charsets.UTF_8)
 
         val stringRequest = StringRequest(
             Request.Method.GET, url,

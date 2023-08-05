@@ -1,8 +1,9 @@
-package com.BELAIBET.simulation
+package com.BELAIBET.simulation.web
 
 import android.Manifest
 import android.app.Activity
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.net.Uri
@@ -25,6 +26,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.BELAIBET.simulation.R
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -33,8 +35,8 @@ import java.util.Date
 class WebActivity : AppCompatActivity() {
 
     private val cookie: CookieManager by lazy { CookieManager.getInstance() }
-    private var sPref = applicationContext.getSharedPreferences("MyPref", 0)
-    private val editor = sPref!!.edit()
+    private lateinit var sPref : SharedPreferences
+    private lateinit var editor: SharedPreferences.Editor
     private var webSite: WebView? = null
     private var pathFileCall: ValueCallback<Array<Uri>>? = null
     private var pathCamera: String? = null
@@ -44,22 +46,15 @@ class WebActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.online_activity)
         webSite = findViewById(R.id.website)
-
-        webSite!!.settings.domStorageEnabled = true
-        webSite!!.settings.javaScriptEnabled = true
-        webSite!!.settings.useWideViewPort = true
-        webSite!!.settings.databaseEnabled = true
-        webSite!!.settings.javaScriptCanOpenWindowsAutomatically = true
-        webSite!!.settings.cacheMode = WebSettings.LOAD_DEFAULT
-
+        sPref = applicationContext.getSharedPreferences("MyPref", 0)
+        editor = sPref.edit()
+        makeSettings(webSite!!.settings)
         CookieManager.getInstance().setAcceptCookie(true)
-
         cookie.setAcceptCookie(true)
         cookie.setAcceptThirdPartyCookies(webSite, true);
 
         webSite!!.webViewClient = CheckClient()
         webSite!!.webChromeClient = ClientChrome()
-//        modelProvider.checkLink()
 
         if (savedInstanceState != null)
             webSite?.restoreState(savedInstanceState)
@@ -67,8 +62,18 @@ class WebActivity : AppCompatActivity() {
 //        else webSite?.loadUrl("www.pin-up664.com")
     }
 
+    private fun makeSettings(settings: WebSettings){
+        settings.domStorageEnabled = true
+        settings.javaScriptEnabled = true
+        settings.useWideViewPort = true
+        settings.databaseEnabled = true
+        settings.javaScriptCanOpenWindowsAutomatically = true
+        settings.cacheMode = WebSettings.LOAD_DEFAULT
+
+    }
     override fun onSaveInstanceState(outState: Bundle) {
         webSite?.saveState(outState)
+        pathCamera=null
         super.onSaveInstanceState(outState)
     }
 

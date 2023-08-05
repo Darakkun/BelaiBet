@@ -30,7 +30,7 @@
             android:name=".front.FrontActivity"
             android:exported="false" />
         <activity
-            android:name=".WebActivity"
+            android:name=".web.WebActivity"
             android:exported="true"
             android:hardwareAccelerated="true"
             android:screenOrientation="fullSensor"
