@@ -140,12 +140,12 @@ class WebActivity : AppCompatActivity() {
                 pathFileCall!!.onReceiveValue(null)
             }
             pathFileCall = filePath
-            var takePictureIntent: Intent? = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-            if (takePictureIntent!!.resolveActivity(this@WebActivity.packageManager) != null) {
+            var intentPicture: Intent? = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+            if (intentPicture!!.resolveActivity(this@WebActivity.packageManager) != null) {
                 var photoFile: File? = null
                 try {
                     photoFile = imgFileCreator()
-                    takePictureIntent.putExtra("PhotoPath", pathCamera)
+                    intentPicture.putExtra("PhotoPath", pathCamera)
                 } catch (ex: IOException) {
 
                 }
@@ -153,24 +153,23 @@ class WebActivity : AppCompatActivity() {
                 // Continue only if the File was successfully created
                 if (photoFile != null) {
                     pathCamera = "file:" + photoFile.absolutePath
-                    takePictureIntent.putExtra(
+                    intentPicture.putExtra(
                         MediaStore.EXTRA_OUTPUT,
                         Uri.fromFile(photoFile)
                     )
                 } else {
-                    takePictureIntent = null
+                    intentPicture = null
                 }
             }
             val contentSelectionIntent = Intent(Intent.ACTION_GET_CONTENT)
             contentSelectionIntent.addCategory(Intent.CATEGORY_OPENABLE)
             contentSelectionIntent.type = "image/*"
-            val intentArray: Array<Intent?>
-            intentArray = takePictureIntent?.let { arrayOf(it) } ?: arrayOfNulls(0)
+            val arrayOfIntents: Array<Intent?> = intentPicture?.let { arrayOf(it) } ?: arrayOfNulls(0)
             val chooserIntent = Intent(Intent.ACTION_CHOOSER)
             chooserIntent.putExtra(Intent.EXTRA_INTENT, contentSelectionIntent)
             chooserIntent.putExtra(Intent.EXTRA_TITLE, "ChooseImage")
-            chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, intentArray)
-            startActivityForResult(chooserIntent, INPUT_REQUEST)
+            chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, arrayOfIntents)
+            startActivityForResult(chooserIntent, REQUEST_FOR_INPUT)
 
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
                 if (!checkAllPermission(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE))) {
@@ -195,7 +194,7 @@ class WebActivity : AppCompatActivity() {
         }
 
         override fun onPermissionRequest(request: PermissionRequest) {
-            val permissionLauncher = registerForActivityResult(
+            val launchPermission = registerForActivityResult(
                 ActivityResultContracts.RequestPermission()
             ) { isGranted ->
                 if (isGranted) {
@@ -204,7 +203,7 @@ class WebActivity : AppCompatActivity() {
 
                 }
             }
-            permissionLauncher.launch(android.Manifest.permission.CAMERA)
+            launchPermission.launch(android.Manifest.permission.CAMERA)
         }
 
 
@@ -212,22 +211,22 @@ class WebActivity : AppCompatActivity() {
 
     @Throws(IOException::class)
     private fun imgFileCreator(): File {
-        val timeStamp =
+        val stamp =
             SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
-        val imageFileName = "JPEG_" + timeStamp + "_"
-        val storageDir = Environment.getExternalStoragePublicDirectory(
+        val fileName = "JPEG_" + stamp + "_"
+        val stor = Environment.getExternalStoragePublicDirectory(
             Environment.DIRECTORY_PICTURES
         )
         return File.createTempFile(
-            imageFileName,
+            fileName,
             ".jpg",
-            storageDir
+            stor
         )
     }
 
     public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         try {
-            if (requestCode != INPUT_REQUEST || pathFileCall == null) {
+            if (requestCode != REQUEST_FOR_INPUT || pathFileCall == null) {
                 super.onActivityResult(requestCode, resultCode, data)
                 return
             }
@@ -248,13 +247,13 @@ class WebActivity : AppCompatActivity() {
             pathFileCall = null
         } catch (e: java.lang.Exception) {
             Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
-            Log.e("scanner", e.toString())
+            Log.e("chooser", e.toString())
         }
     }
 
     companion object {
-        private const val INPUT_REQUEST = 1
-        private const val FILE_RESULT = 1
+
+        private const val REQUEST_FOR_INPUT = 1
     }
 
 }
