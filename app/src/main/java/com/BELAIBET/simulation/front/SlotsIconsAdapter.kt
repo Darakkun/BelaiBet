@@ -40,8 +40,8 @@ class SlotsIconsAdapter(private val list: List<Int>) :
     inner class IconViewHolder(iconView: View) : RecyclerView.ViewHolder(iconView) {
         private val slotView: ImageView = iconView.findViewById(R.id.slot_icon)
 
-        fun connect(slot: Int) {
-            slotView.setImageResource(slot)
+        fun connect(iconSlot: Int) {
+            slotView.setImageResource(iconSlot)
         }
     }
 }

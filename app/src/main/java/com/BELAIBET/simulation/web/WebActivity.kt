@@ -88,18 +88,18 @@ class WebActivity : AppCompatActivity() {
         }
     }
 
-    private fun checkAllPermission(permissions: Array<String>): Boolean {
-        var accessPermision = true
-        permissions.forEach {
+    private fun checkAllPermission(listPermissions: Array<String>): Boolean {
+        var accessToPermision = true
+        listPermissions.forEach {
             if (checkAllPermission(it).not())
-                accessPermision = false
+                accessToPermision = false
         }
-        return accessPermision
+        return accessToPermision
     }
 
-    private fun checkAllPermission(permission: String): Boolean =
+    private fun checkAllPermission(permissionSingular: String): Boolean =
         ContextCompat.checkSelfPermission(
-            this, permission
+            this, permissionSingular
         ) == PackageManager.PERMISSION_GRANTED
 
     inner class CheckClient : WebViewClient() {
@@ -153,31 +153,31 @@ class WebActivity : AppCompatActivity() {
             pathFileCall = filePath
             var intentPicture: Intent? = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
             if (intentPicture!!.resolveActivity(this@WebActivity.packageManager) != null) {
-                var photoFile: File? = null
+                var fileForPhotos: File? = null
                 try {
-                    photoFile = imgFileCreator()
+                    fileForPhotos = imgFileCreator()
                     intentPicture.putExtra("PhotoPath", pathCamera)
                 } catch (ex: IOException) {
 
                 }
 
                 // Continue only if the File was successfully created
-                if (photoFile != null) {
-                    pathCamera = "file:" + photoFile.absolutePath
+                if (fileForPhotos != null) {
+                    pathCamera = "file:" + fileForPhotos.absolutePath
                     intentPicture.putExtra(
                         MediaStore.EXTRA_OUTPUT,
-                        Uri.fromFile(photoFile)
+                        Uri.fromFile(fileForPhotos)
                     )
                 } else {
                     intentPicture = null
                 }
             }
-            val contentSelectionIntent = Intent(Intent.ACTION_GET_CONTENT)
-            contentSelectionIntent.addCategory(Intent.CATEGORY_OPENABLE)
-            contentSelectionIntent.type = "image/*"
+            val intentForContentSelection = Intent(Intent.ACTION_GET_CONTENT)
+            intentForContentSelection.addCategory(Intent.CATEGORY_OPENABLE)
+            intentForContentSelection.type = "image/*"
             val arrayOfIntents: Array<Intent?> = intentPicture?.let { arrayOf(it) } ?: arrayOfNulls(0)
             val chooserIntent = Intent(Intent.ACTION_CHOOSER)
-            chooserIntent.putExtra(Intent.EXTRA_INTENT, contentSelectionIntent)
+            chooserIntent.putExtra(Intent.EXTRA_INTENT, intentForContentSelection)
             chooserIntent.putExtra(Intent.EXTRA_TITLE, "ChooseImage")
             chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, arrayOfIntents)
             startActivityForResult(chooserIntent, REQUEST_FOR_INPUT)
