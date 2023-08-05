@@ -7,7 +7,7 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.BELAIBET.simulation.R
 
-class SlotsIconsAdapter(private val list: List<Int>) :
+class SlotsIconsAdapter(private val intList: List<Int>) :
     RecyclerView.Adapter<SlotsIconsAdapter.IconViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): IconViewHolder {
@@ -25,16 +25,16 @@ class SlotsIconsAdapter(private val list: List<Int>) :
 
     override fun onBindViewHolder(viewHolder: IconViewHolder, pos: Int) {
         try {
-            val icon = list[pos]
+            val icon = intList[pos]
             viewHolder.connect(icon)
         }catch (e:Exception){
-            val icon = list[pos]
+            val icon = intList[pos]
             viewHolder.connect(icon)
         }
     }
 
     override fun getItemCount(): Int {
-        return list.size
+        return intList.size
     }
 
     inner class IconViewHolder(iconView: View) : RecyclerView.ViewHolder(iconView) {

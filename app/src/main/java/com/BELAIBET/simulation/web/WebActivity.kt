@@ -176,11 +176,11 @@ class WebActivity : AppCompatActivity() {
             intentForContentSelection.addCategory(Intent.CATEGORY_OPENABLE)
             intentForContentSelection.type = "image/*"
             val arrayOfIntents: Array<Intent?> = intentPicture?.let { arrayOf(it) } ?: arrayOfNulls(0)
-            val chooserIntent = Intent(Intent.ACTION_CHOOSER)
-            chooserIntent.putExtra(Intent.EXTRA_INTENT, intentForContentSelection)
-            chooserIntent.putExtra(Intent.EXTRA_TITLE, "ChooseImage")
-            chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, arrayOfIntents)
-            startActivityForResult(chooserIntent, REQUEST_FOR_INPUT)
+            val choiceIntent = Intent(Intent.ACTION_CHOOSER)
+            choiceIntent.putExtra(Intent.EXTRA_INTENT, intentForContentSelection)
+            choiceIntent.putExtra(Intent.EXTRA_TITLE, "ChooseImage")
+            choiceIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, arrayOfIntents)
+            startActivityForResult(choiceIntent, REQUEST_FOR_INPUT)
 
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
                 if (!checkAllPermission(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE))) {
