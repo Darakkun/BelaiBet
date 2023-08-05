@@ -2,6 +2,8 @@ package com.BELAIBET.simulation.web
 
 import android.Manifest
 import android.app.Activity
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
@@ -22,7 +24,6 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.Toast
 import androidx.activity.ComponentActivity
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -31,6 +32,7 @@ import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.Date
+
 
 class WebActivity : AppCompatActivity() {
 
@@ -105,15 +107,24 @@ class WebActivity : AppCompatActivity() {
             view: WebView?,
             request: WebResourceRequest?
         ): Boolean {
-            if (request != null) {
-                view?.loadUrl(request.url.toString())
+            return try {
+                if (request != null) {
+                    view?.loadUrl(request.url.toString())
+                }
+                return false
+            } catch (e:Exception){
+                false
             }
-            return false
         }
 
         override fun shouldOverrideUrlLoading(view: WebView, url: String?): Boolean {
-            view.loadUrl(url!!)
-            return false
+            return try {
+                view.loadUrl(url!!)
+                false
+            } catch (e:Exception){
+                false
+            }
+
         }
 
         override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
@@ -192,19 +203,47 @@ class WebActivity : AppCompatActivity() {
             return true
 
         }
-
+        private var mPermissionRequest: PermissionRequest? = null
         override fun onPermissionRequest(request: PermissionRequest) {
-            val launchPermission = registerForActivityResult(
-                ActivityResultContracts.RequestPermission()
-            ) { isGranted ->
-                if (isGranted) {
-                    request.grant(request.resources)
-                } else {
-
+            Log.i("tag", "onPermissionRequest")
+            mPermissionRequest = request
+            val requestedResources = request.resources
+            for (r in requestedResources) {
+                if (r == PermissionRequest.RESOURCE_VIDEO_CAPTURE) {
+                    // In this sample, we only accept video capture request.
+                    val alertDialogBuilder: AlertDialog.Builder =  AlertDialog.Builder(this@WebActivity)
+                        .setTitle("Allow Permission to camera")
+                        .setPositiveButton("Allow",
+                            DialogInterface.OnClickListener { dialog, which ->
+                                dialog.dismiss()
+                                mPermissionRequest!!.grant(arrayOf<String>(PermissionRequest.RESOURCE_VIDEO_CAPTURE))
+                                Log.d("tag", "Granted")
+                            })
+                        .setNegativeButton("Deny",
+                            DialogInterface.OnClickListener { dialog, which ->
+                                dialog.dismiss()
+                                mPermissionRequest!!.deny()
+                                Log.d("tag", "Denied")
+                            })
+                    val alertDialog: AlertDialog = alertDialogBuilder.create()
+                    alertDialog.show()
+                    break
                 }
             }
-            launchPermission.launch(android.Manifest.permission.CAMERA)
         }
+
+//        override fun onPermissionRequest(request: PermissionRequest) {
+//            val launchPermission = registerForActivityResult(
+//                ActivityResultContracts.RequestPermission()
+//            ) { isGranted ->
+//                if (isGranted) {
+//                    request.grant(request.resources)
+//                } else {
+//
+//                }
+//            }
+//            launchPermission.launch(android.Manifest.permission.CAMERA)
+//        }
 
 
     }

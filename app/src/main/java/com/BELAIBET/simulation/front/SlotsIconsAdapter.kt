@@ -11,14 +11,26 @@ class SlotsIconsAdapter(private val list: List<Int>) :
     RecyclerView.Adapter<SlotsIconsAdapter.IconViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): IconViewHolder {
-        val slotPick =
-            LayoutInflater.from(parent.context).inflate(R.layout.slot_icon, parent, false)
-        return IconViewHolder(slotPick)
+        return try {
+            val slotPick =
+                LayoutInflater.from(parent.context).inflate(R.layout.slot_icon, parent, false)
+            IconViewHolder(slotPick)
+        }catch (e:Exception){
+            val slotPick =
+                LayoutInflater.from(parent.context).inflate(R.layout.slot_icon, parent, false)
+            IconViewHolder(slotPick)
+        }
+
     }
 
-    override fun onBindViewHolder(holder: IconViewHolder, position: Int) {
-        val icon = list[position]
-        holder.connect(icon)
+    override fun onBindViewHolder(viewHolder: IconViewHolder, pos: Int) {
+        try {
+            val icon = list[pos]
+            viewHolder.connect(icon)
+        }catch (e:Exception){
+            val icon = list[pos]
+            viewHolder.connect(icon)
+        }
     }
 
     override fun getItemCount(): Int {
