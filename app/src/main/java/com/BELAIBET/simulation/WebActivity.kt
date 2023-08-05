@@ -9,7 +9,6 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
-import android.os.Parcelable
 import android.provider.MediaStore
 import android.util.Log
 import android.webkit.CookieManager
@@ -36,61 +35,59 @@ class WebActivity : AppCompatActivity() {
     private val cookie: CookieManager by lazy { CookieManager.getInstance() }
     private var sPref = applicationContext.getSharedPreferences("MyPref", 0)
     private val editor = sPref!!.edit()
-    private var webLayout: WebView? = null
-    private var captureImg: Uri? = null
+    private var webSite: WebView? = null
     private var pathFileCall: ValueCallback<Array<Uri>>? = null
     private var pathCamera: String? = null
-    private var messageForUpload: ValueCallback<Uri?>? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.online_activity)
-        webLayout = findViewById(R.id.website)
+        webSite = findViewById(R.id.website)
 
-        webLayout!!.settings.domStorageEnabled = true
-        webLayout!!.settings.javaScriptEnabled = true
-        webLayout!!.settings.useWideViewPort = true
-        webLayout!!.settings.databaseEnabled = true
-        webLayout!!.settings.javaScriptCanOpenWindowsAutomatically = true
-        webLayout!!.settings.cacheMode = WebSettings.LOAD_DEFAULT
+        webSite!!.settings.domStorageEnabled = true
+        webSite!!.settings.javaScriptEnabled = true
+        webSite!!.settings.useWideViewPort = true
+        webSite!!.settings.databaseEnabled = true
+        webSite!!.settings.javaScriptCanOpenWindowsAutomatically = true
+        webSite!!.settings.cacheMode = WebSettings.LOAD_DEFAULT
 
         CookieManager.getInstance().setAcceptCookie(true)
 
         cookie.setAcceptCookie(true)
-        cookie.setAcceptThirdPartyCookies(webLayout, true);
+        cookie.setAcceptThirdPartyCookies(webSite, true);
 
-        webLayout!!.webViewClient = CheckClient()
-        webLayout!!.webChromeClient = ClientChrome()
+        webSite!!.webViewClient = CheckClient()
+        webSite!!.webChromeClient = ClientChrome()
 //        modelProvider.checkLink()
 
         if (savedInstanceState != null)
-            webLayout?.restoreState(savedInstanceState)
-        else sPref.getString("url",null)?.let { webLayout?.loadUrl(it) }
-//        else webLayout?.loadUrl("www.pin-up664.com")
+            webSite?.restoreState(savedInstanceState)
+        else sPref.getString("url",null)?.let { webSite?.loadUrl(it) }
+//        else webSite?.loadUrl("www.pin-up664.com")
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        webLayout?.saveState(outState)
+        webSite?.saveState(outState)
         super.onSaveInstanceState(outState)
     }
 
 
     override fun onBackPressed() {
-        if (webLayout!!.canGoBack()) {
-            webLayout!!.goBack()
+        if (webSite!!.canGoBack()) {
+            webSite!!.goBack()
         } else {
 
         }
     }
 
     private fun checkAllPermission(permissions: Array<String>): Boolean {
-        var permissionTrue = true
+        var accessPermision = true
         permissions.forEach {
             if (checkAllPermission(it).not())
-                permissionTrue = false
+                accessPermision = false
         }
-        return permissionTrue
+        return accessPermision
     }
 
     private fun checkAllPermission(permission: String): Boolean =
@@ -128,21 +125,18 @@ class WebActivity : AppCompatActivity() {
 
     inner class ClientChrome : WebChromeClient() {
 
-        // For Android 5.0
         override fun onShowFileChooser(
             view: WebView,
             filePath: ValueCallback<Array<Uri>>,
             fileChooserParams: FileChooserParams
         ): Boolean {
 
-            // Double check that we don't have any existing callbacks
             if (pathFileCall != null) {
                 pathFileCall!!.onReceiveValue(null)
             }
             pathFileCall = filePath
             var takePictureIntent: Intent? = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
             if (takePictureIntent!!.resolveActivity(this@WebActivity.packageManager) != null) {
-                // Create the File where the photo should go
                 var photoFile: File? = null
                 try {
                     photoFile = imgFileCreator()
@@ -171,7 +165,7 @@ class WebActivity : AppCompatActivity() {
             chooserIntent.putExtra(Intent.EXTRA_INTENT, contentSelectionIntent)
             chooserIntent.putExtra(Intent.EXTRA_TITLE, "ChooseImage")
             chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, intentArray)
-            startActivityForResult(chooserIntent, INPUT_FILE_REQUEST_CODE)
+            startActivityForResult(chooserIntent, INPUT_REQUEST)
 
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
                 if (!checkAllPermission(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE))) {
@@ -195,61 +189,6 @@ class WebActivity : AppCompatActivity() {
 
         }
 
-        // openFileChooser for Android 3.0+
-        // openFileChooser for Android < 3.0
-        @JvmOverloads
-        fun openFileChooser(uploadMsg: ValueCallback<Uri?>?, acceptType: String? = "") {
-
-            messageForUpload = uploadMsg
-            // Create AndroidExampleFolder at sdcard
-            // Create AndroidExampleFolder at sdcard
-            val imageStorageDir = File(
-                Environment.getExternalStoragePublicDirectory(
-                    Environment.DIRECTORY_PICTURES
-                ), "AndroidExampleFolder"
-            )
-            if (!imageStorageDir.exists()) {
-                // Create AndroidExampleFolder at sdcard
-                imageStorageDir.mkdirs()
-            }
-
-            // Create camera captured image file path and name
-            val file = File(
-                imageStorageDir.toString() + File.separator + "IMG_"
-                        + System.currentTimeMillis().toString() + ".jpg"
-            )
-            captureImg = Uri.fromFile(file)
-
-            // Camera capture image intent
-            val captureIntent = Intent(
-                MediaStore.ACTION_IMAGE_CAPTURE
-            )
-            captureIntent.putExtra(MediaStore.EXTRA_OUTPUT, captureImg)
-            val i = Intent(Intent.ACTION_GET_CONTENT)
-            i.addCategory(Intent.CATEGORY_OPENABLE)
-            i.type = "image/*"
-
-            // Create file chooser intent
-            val chooserIntent = Intent.createChooser(i, "ChooseImage")
-
-            // Set camera intent to file chooser
-            chooserIntent.putExtra(
-                Intent.EXTRA_INITIAL_INTENTS, arrayOf<Parcelable>(captureIntent)
-            )
-
-            // On select image call onActivityResult method of activity
-            startActivityForResult(chooserIntent, FILECHOOSER_RESULTCODE)
-        }
-
-        //openFileChooser for other Android versions
-        fun openFileChooser(
-            uploadMsg: ValueCallback<Uri?>?,
-            acceptType: String?,
-            capture: String?
-        ) {
-            openFileChooser(uploadMsg, acceptType)
-        }
-
         override fun onPermissionRequest(request: PermissionRequest) {
             val permissionLauncher = registerForActivityResult(
                 ActivityResultContracts.RequestPermission()
@@ -257,7 +196,7 @@ class WebActivity : AppCompatActivity() {
                 if (isGranted) {
                     request.grant(request.resources)
                 } else {
-                    // Do otherwise
+
                 }
             }
             permissionLauncher.launch(android.Manifest.permission.CAMERA)
@@ -268,7 +207,6 @@ class WebActivity : AppCompatActivity() {
 
     @Throws(IOException::class)
     private fun imgFileCreator(): File {
-        // Create an image file name
         val timeStamp =
             SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
         val imageFileName = "JPEG_" + timeStamp + "_"
@@ -276,22 +214,21 @@ class WebActivity : AppCompatActivity() {
             Environment.DIRECTORY_PICTURES
         )
         return File.createTempFile(
-            imageFileName,  /* prefix */
-            ".jpg",  /* suffix */
-            storageDir /* directory */
+            imageFileName,
+            ".jpg",
+            storageDir
         )
     }
 
     public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         try {
-            if (requestCode != INPUT_FILE_REQUEST_CODE || pathFileCall == null) {
+            if (requestCode != INPUT_REQUEST || pathFileCall == null) {
                 super.onActivityResult(requestCode, resultCode, data)
                 return
             }
             var results: Array<Uri>? = null
             if (resultCode == ComponentActivity.RESULT_OK) {
                 if (data == null) {
-                    // If there is not data, then we may have taken a photo
                     if (pathCamera != null) {
                         results = arrayOf(Uri.parse(pathCamera))
                     }
@@ -311,8 +248,8 @@ class WebActivity : AppCompatActivity() {
     }
 
     companion object {
-        private const val INPUT_FILE_REQUEST_CODE = 1
-        private const val FILECHOOSER_RESULTCODE = 1
+        private const val INPUT_REQUEST = 1
+        private const val FILE_RESULT = 1
     }
 
 }
