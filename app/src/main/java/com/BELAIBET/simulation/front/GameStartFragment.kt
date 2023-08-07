@@ -11,26 +11,26 @@ import com.BELAIBET.simulation.databinding.GameStartLayoutBinding
 
 class GameStartFragment:Fragment() {
 
-    private var _binding: GameStartLayoutBinding? = null
-    private val binding get() = _binding!!
+    private var _bindingBelai: GameStartLayoutBinding? = null
+    private val bindingBelai get() = _bindingBelai!!
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflaterBelai: LayoutInflater, containerBelai: ViewGroup?,
+        savedInstanceStateBelai: Bundle?
     ): View {
 
-        _binding =  GameStartLayoutBinding.inflate(inflater, container, false)
-        binding.startGame.setOnClickListener {
+        _bindingBelai =  GameStartLayoutBinding.inflate(inflaterBelai, containerBelai, false)
+        bindingBelai.startGame.setOnClickListener {
             findNavController().navigate(R.id.action_GameStartFragment_to_SlotsFragment)
         }
-        return binding.root
+        return bindingBelai.root
     }
 
     override fun onDestroyView() {
         try {
             super.onDestroyView()
-            _binding = null
-        } catch (e:Exception) {
+            _bindingBelai = null
+        } catch (extraBelai:Exception) {
 
         }
     }

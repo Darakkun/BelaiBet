@@ -35,19 +35,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/line1" />
+                app:srcCompat="@drawable/line1_belai" />
             <ImageView
                 android:id="@+id/secondTable_belaibet"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/line2" />
+                app:srcCompat="@drawable/line2_belai" />
             <ImageView
                 android:id="@+id/thirdTable_belaibet"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/line3" />
+                app:srcCompat="@drawable/line3_belai" />
         </LinearLayout>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_for_slots_belaibet"
@@ -136,7 +136,7 @@
         android:id="@+id/scorePanel_belaibet"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/golden_panel"
+        android:background="@drawable/golden_panel_belai"
         android:textColor="@color/black_slots"
         android:textAlignment="center"
         android:text="500"
@@ -152,7 +152,7 @@
     <ImageView
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:src="@drawable/golden_circle"
+        android:src="@drawable/golden_circle_belai"
         app:layout_constraintBottom_toBottomOf="@id/scorePanel_belaibet"
         app:layout_constraintTop_toTopOf="@+id/scorePanel_belaibet"
         app:layout_constraintEnd_toStartOf="@id/scorePanel_belaibet"

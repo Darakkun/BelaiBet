@@ -7,8 +7,8 @@ import com.BELAIBET.simulation.R
 
 class FrontActivity: AppCompatActivity() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onCreate(savedInstanceStateBelai: Bundle?) {
+        super.onCreate(savedInstanceStateBelai)
         try {
             setContentView(R.layout.front_layout)
         }catch (e:Exception){
@@ -18,7 +18,7 @@ class FrontActivity: AppCompatActivity() {
     }
     override fun onBackPressed() {
         try{
-            val a =125
+            val belaimagicbet =125
         }catch (e:Exception){
         }
     }

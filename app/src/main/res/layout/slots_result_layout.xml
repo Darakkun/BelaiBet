@@ -16,7 +16,7 @@
         android:id="@+id/scorePanel_belaibet"
         android:layout_width="200dp"
         android:layout_height="100dp"
-        android:background="@drawable/golden_panel"
+        android:background="@drawable/golden_panel_belai"
         android:textColor="@color/black_slots"
         android:gravity="center"
         android:layout_marginTop="200dp"
@@ -42,18 +42,18 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/seven"
+            android:src="@drawable/sevenbelai"
             />
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/seven"
+            android:src="@drawable/sevenbelai"
 
             />
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/seven"
+            android:src="@drawable/sevenbelai"
             />
     </LinearLayout>
 
@@ -61,7 +61,7 @@
     android:id="@+id/winMessage"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:src="@drawable/win_text"
+    android:src="@drawable/win_text_belai"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintEnd_toEndOf="parent"

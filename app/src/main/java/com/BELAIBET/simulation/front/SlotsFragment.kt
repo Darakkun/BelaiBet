@@ -17,180 +17,184 @@ import java.util.Random
 
 class SlotsFragment : Fragment() {
 
-    private var _binding: SlotsLayoutBinding? = null
-    private val binding get() = _binding!!
+    private var _bindingBelai: SlotsLayoutBinding? = null
+    private val bindingBelai get() = _bindingBelai!!
     private var maxNumberOfShufles: Int = Random().nextInt(5) + 6
     private var numberOfShufles: Int = 0
-    private var currentBet = 1
+    private var currentBetBelai = 1
 
-    private lateinit var slotsIconsAdapter: SlotsIconsAdapter
-    private lateinit var gridManger: LinearLayoutManager
-    var iconSlotsList = listOf<Int>()
+    private lateinit var slotsIconsAdapterBelai: SlotsIconsAdapterBelai
+    private lateinit var gridMangerBelai: LinearLayoutManager
+    var iconSlotsListBelai = listOf<Int>()
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflaterBelai: LayoutInflater, containerBelai: ViewGroup?,
+        savedInstanceStateBelai: Bundle?
     ): View {
 
-        _binding = SlotsLayoutBinding.inflate(inflater, container, false)
-        gridManger = GridLayoutManager(this.requireContext(), 3)
-        binding.recyclerForSlotsBelaibet.layoutManager = gridManger
-        iconSlotsList = buildSlotsList()
-        slotsIconsAdapter = SlotsIconsAdapter(iconSlotsList)
-        binding.recyclerForSlotsBelaibet.adapter = slotsIconsAdapter
+        _bindingBelai = SlotsLayoutBinding.inflate(inflaterBelai, containerBelai, false)
+        gridMangerBelai = GridLayoutManager(this.requireContext(), 3)
+        bindingBelai.recyclerForSlotsBelaibet.layoutManager = gridMangerBelai
+        iconSlotsListBelai = buildSlotsList()
+        slotsIconsAdapterBelai = SlotsIconsAdapterBelai(iconSlotsListBelai)
+        bindingBelai.recyclerForSlotsBelaibet.adapter = slotsIconsAdapterBelai
 
-        binding.spinButtonBelaibet.setOnClickListener {
+        bindingBelai.spinButtonBelaibet.setOnClickListener {
             numberOfShufles++
             if (numberOfShufles == maxNumberOfShufles) {
                 val position = 50
-                binding.recyclerForSlotsBelaibet.smoothScrollToPosition(position)
-                iconSlotsList = createFakeList()
-                slotsIconsAdapter = SlotsIconsAdapter(iconSlotsList)
-                binding.recyclerForSlotsBelaibet.adapter = slotsIconsAdapter
-                binding.winBracketBelaibet.visibility=View.VISIBLE
+                bindingBelai.recyclerForSlotsBelaibet.smoothScrollToPosition(position)
+                iconSlotsListBelai = createFakeList()
+                slotsIconsAdapterBelai = SlotsIconsAdapterBelai(iconSlotsListBelai)
+                bindingBelai.recyclerForSlotsBelaibet.adapter = slotsIconsAdapterBelai
+                bindingBelai.winBracketBelaibet.visibility=View.VISIBLE
                 Handler(Looper.getMainLooper()).postDelayed({
                     val bundle = Bundle()
-                    bundle.putInt("amount_belaibet", currentBet*500)
+                    bundle.putInt("amount_belaibet", currentBetBelai*500)
                     findNavController().navigate(R.id.Slots_result_fragment, bundle)
                 }, 2000)
 
                 } else {
                 val position = 50
 //                modelProvider.currentScore += position
-                iconSlotsList = buildSlotsList()
-                slotsIconsAdapter = SlotsIconsAdapter(iconSlotsList)
-                binding.recyclerForSlotsBelaibet.adapter = slotsIconsAdapter
-                binding.recyclerForSlotsBelaibet.smoothScrollToPosition(position)
+                iconSlotsListBelai = buildSlotsList()
+                slotsIconsAdapterBelai = SlotsIconsAdapterBelai(iconSlotsListBelai)
+                bindingBelai.recyclerForSlotsBelaibet.adapter = slotsIconsAdapterBelai
+                bindingBelai.recyclerForSlotsBelaibet.smoothScrollToPosition(position)
             }
         }
 
-        binding.minusBet.setOnClickListener {
-            if (currentBet > 0) currentBet--
-            binding.currentBet.text = currentBet.toString()
-            binding.scorePanelBelaibet.text = (currentBet*500).toString()
+        bindingBelai.minusBet.setOnClickListener {
+            if (currentBetBelai > 0) currentBetBelai--
+            bindingBelai.currentBet.text = currentBetBelai.toString()
+            bindingBelai.scorePanelBelaibet.text = (currentBetBelai*500).toString()
         }
 
-        binding.plusBetBelaibet.setOnClickListener {
-            if (currentBet < 10) currentBet++
-            binding.currentBet.text = currentBet.toString()
-            binding.scorePanelBelaibet.text = (currentBet*500).toString()
+        bindingBelai.plusBetBelaibet.setOnClickListener {
+            if (currentBetBelai < 10) currentBetBelai++
+            bindingBelai.currentBet.text = currentBetBelai.toString()
+            bindingBelai.scorePanelBelaibet.text = (currentBetBelai*500).toString()
         }
 
 
-        return binding.root
+        return bindingBelai.root
     }
 
 
     private fun buildSlotsList(): List<Int> {
         val iconsList = mutableListOf<Int>()
-        iconsList.add(R.drawable.melon)
-        iconsList.add(R.drawable.gold)
-        iconsList.add(R.drawable.grape)
-        iconsList.add(R.drawable.lemon)
-        iconsList.add(R.drawable.diamond)
-        iconsList.add(R.drawable.cherry)
-        iconsList.add(R.drawable.seven)
-        iconsList.add(R.drawable.orange)
-        iconsList.add(R.drawable.star)
-        iconsList.add(R.drawable.melon)
-        iconsList.add(R.drawable.gold)
-        iconsList.add(R.drawable.grape)
-        iconsList.add(R.drawable.lemon)
-        iconsList.add(R.drawable.diamond)
-        iconsList.add(R.drawable.cherry)
-        iconsList.add(R.drawable.seven)
-        iconsList.add(R.drawable.orange)
-        iconsList.add(R.drawable.star)
-        iconsList.add(R.drawable.melon)
-        iconsList.add(R.drawable.gold)
-        iconsList.add(R.drawable.grape)
-        iconsList.add(R.drawable.lemon)
-        iconsList.add(R.drawable.diamond)
-        iconsList.add(R.drawable.cherry)
-        iconsList.add(R.drawable.seven)
-        iconsList.add(R.drawable.orange)
-        iconsList.add(R.drawable.star)
-        iconsList.add(R.drawable.melon)
-        iconsList.add(R.drawable.gold)
-        iconsList.add(R.drawable.grape)
-        iconsList.add(R.drawable.lemon)
-        iconsList.add(R.drawable.diamond)
-        iconsList.add(R.drawable.cherry)
-        iconsList.add(R.drawable.seven)
-        iconsList.add(R.drawable.orange)
-        iconsList.add(R.drawable.star)
-        iconsList.add(R.drawable.melon)
-        iconsList.add(R.drawable.gold)
-        iconsList.add(R.drawable.grape)
-        iconsList.add(R.drawable.lemon)
-        iconsList.add(R.drawable.diamond)
-        iconsList.add(R.drawable.cherry)
-        iconsList.add(R.drawable.seven)
-        iconsList.add(R.drawable.orange)
-        iconsList.add(R.drawable.star)
-        iconsList.add(R.drawable.melon)
-        iconsList.add(R.drawable.gold)
-        iconsList.add(R.drawable.grape)
-        iconsList.add(R.drawable.lemon)
-        iconsList.add(R.drawable.diamond)
-        iconsList.add(R.drawable.cherry)
-        iconsList.add(R.drawable.seven)
-        iconsList.add(R.drawable.orange)
-        iconsList.add(R.drawable.star)
-        iconsList.add(R.drawable.melon)
-        iconsList.add(R.drawable.gold)
-        iconsList.add(R.drawable.grape)
-        iconsList.add(R.drawable.lemon)
-        iconsList.add(R.drawable.diamond)
-        iconsList.add(R.drawable.cherry)
-        iconsList.add(R.drawable.seven)
-        iconsList.add(R.drawable.orange)
-        iconsList.add(R.drawable.star)
-        iconsList.add(R.drawable.melon)
-        iconsList.add(R.drawable.gold)
-        iconsList.add(R.drawable.grape)
-        iconsList.add(R.drawable.lemon)
-        iconsList.add(R.drawable.diamond)
-        iconsList.add(R.drawable.cherry)
-        iconsList.add(R.drawable.seven)
-        iconsList.add(R.drawable.orange)
-        iconsList.add(R.drawable.star)
+        iconsList.add(R.drawable.melonbelai)
+        iconsList.add(R.drawable.gold_belai)
+        iconsList.add(R.drawable.grape_belai)
+        iconsList.add(R.drawable.lemon_belai)
+        iconsList.add(R.drawable.diamond_belai)
+        iconsList.add(R.drawable.cherrybelai)
+        iconsList.add(R.drawable.sevenbelai)
+        iconsList.add(R.drawable.orangebelai)
+        iconsList.add(R.drawable.starbelai)
+        iconsList.add(R.drawable.melonbelai)
+        iconsList.add(R.drawable.gold_belai)
+        iconsList.add(R.drawable.grape_belai)
+        iconsList.add(R.drawable.lemon_belai)
+        iconsList.add(R.drawable.diamond_belai)
+        iconsList.add(R.drawable.cherrybelai)
+        iconsList.add(R.drawable.sevenbelai)
+        iconsList.add(R.drawable.orangebelai)
+        iconsList.add(R.drawable.starbelai)
+        iconsList.add(R.drawable.melonbelai)
+        iconsList.add(R.drawable.gold_belai)
+        iconsList.add(R.drawable.grape_belai)
+        iconsList.add(R.drawable.lemon_belai)
+        iconsList.add(R.drawable.diamond_belai)
+        iconsList.add(R.drawable.cherrybelai)
+        iconsList.add(R.drawable.sevenbelai)
+        iconsList.add(R.drawable.orangebelai)
+        iconsList.add(R.drawable.starbelai)
+        iconsList.add(R.drawable.melonbelai)
+        iconsList.add(R.drawable.gold_belai)
+        iconsList.add(R.drawable.grape_belai)
+        iconsList.add(R.drawable.lemon_belai)
+        iconsList.add(R.drawable.diamond_belai)
+        iconsList.add(R.drawable.cherrybelai)
+        iconsList.add(R.drawable.sevenbelai)
+        iconsList.add(R.drawable.orangebelai)
+        iconsList.add(R.drawable.starbelai)
+        iconsList.add(R.drawable.melonbelai)
+        iconsList.add(R.drawable.gold_belai)
+        iconsList.add(R.drawable.grape_belai)
+        iconsList.add(R.drawable.lemon_belai)
+        iconsList.add(R.drawable.diamond_belai)
+        iconsList.add(R.drawable.cherrybelai)
+        iconsList.add(R.drawable.sevenbelai)
+        iconsList.add(R.drawable.orangebelai)
+        iconsList.add(R.drawable.starbelai)
+        iconsList.add(R.drawable.melonbelai)
+        iconsList.add(R.drawable.gold_belai)
+        iconsList.add(R.drawable.grape_belai)
+        iconsList.add(R.drawable.lemon_belai)
+        iconsList.add(R.drawable.diamond_belai)
+        iconsList.add(R.drawable.cherrybelai)
+        iconsList.add(R.drawable.sevenbelai)
+        iconsList.add(R.drawable.orangebelai)
+        iconsList.add(R.drawable.starbelai)
+        iconsList.add(R.drawable.melonbelai)
+        iconsList.add(R.drawable.gold_belai)
+        iconsList.add(R.drawable.grape_belai)
+        iconsList.add(R.drawable.lemon_belai)
+        iconsList.add(R.drawable.diamond_belai)
+        iconsList.add(R.drawable.cherrybelai)
+        iconsList.add(R.drawable.sevenbelai)
+        iconsList.add(R.drawable.orangebelai)
+        iconsList.add(R.drawable.starbelai)
+        iconsList.add(R.drawable.melonbelai)
+        iconsList.add(R.drawable.gold_belai)
+        iconsList.add(R.drawable.grape_belai)
+        iconsList.add(R.drawable.lemon_belai)
+        iconsList.add(R.drawable.diamond_belai)
+        iconsList.add(R.drawable.cherrybelai)
+        iconsList.add(R.drawable.sevenbelai)
+        iconsList.add(R.drawable.orangebelai)
+        iconsList.add(R.drawable.starbelai)
         randomaziList(iconsList)
         return iconsList
     }
 
     private fun createFakeList(): List<Int> {
         val iconsList = mutableListOf<Int>()
-        iconsList.add(R.drawable.seven)
-        iconsList.add(R.drawable.seven)
-        iconsList.add(R.drawable.seven)
-        iconsList.add(R.drawable.melon)
-        iconsList.add(R.drawable.gold)
-        iconsList.add(R.drawable.grape)
-        iconsList.add(R.drawable.lemon)
-        iconsList.add(R.drawable.diamond)
-        iconsList.add(R.drawable.cherry)
-        iconsList.add(R.drawable.orange)
-        iconsList.add(R.drawable.star)
+        iconsList.add(R.drawable.sevenbelai)
+        iconsList.add(R.drawable.sevenbelai)
+        iconsList.add(R.drawable.sevenbelai)
+        iconsList.add(R.drawable.melonbelai)
+        iconsList.add(R.drawable.gold_belai)
+        iconsList.add(R.drawable.grape_belai)
+        iconsList.add(R.drawable.lemon_belai)
+        iconsList.add(R.drawable.diamond_belai)
+        iconsList.add(R.drawable.cherrybelai)
+        iconsList.add(R.drawable.orangebelai)
+        iconsList.add(R.drawable.starbelai)
         return iconsList
     }
 
 
-    private fun <T> randomaziList(list: MutableList<T>) {
-        val random = java.util.Random()
-        for (i in list.size - 1 downTo 1) {
-            val j = random.nextInt(i + 1)
-            val temp = list[i]
-            list[i] = list[j]
-            list[j] = temp
+    private fun <T> randomaziList(listBelai: MutableList<T>) {
+        val randomBelai = java.util.Random()
+        for (i in listBelai.size - 1 downTo 1) {
+            val j = randomBelai.nextInt(i + 1)
+            val tempBelai = listBelai[i]
+            listBelai[i] = listBelai[j]
+            listBelai[j] = tempBelai
         }
     }
 
 
 
     override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+        try {
+            super.onDestroyView()
+            _bindingBelai = null
+        } catch (e:Exception) {
+
+        }
     }
 
 }
