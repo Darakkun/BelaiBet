@@ -9,9 +9,18 @@ class FrontActivity: AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.front_layout)
-    }
-    override fun onBackPressed() {
+        try {
+            setContentView(R.layout.front_layout)
+        }catch (e:Exception){
+
+        }
 
     }
+    override fun onBackPressed() {
+        try{
+            val a =125
+        }catch (e:Exception){
+        }
+    }
+
 }

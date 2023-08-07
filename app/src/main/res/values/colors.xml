@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
-    <color name="yellow">#FBF240</color>
-    <color name="darkGrey">#1E1D1D</color>
-    <color name="green">#6EE50F</color>
-    <color name="red">#FF0101</color>
-    <color name="orange">#FFA500</color>
+    <color name="black_slots">#FF000000</color>
+    <color name="white_slots">#FFFFFFFF</color>
+    <color name="yellow_slots">#FBF240</color>
+    <color name="darkGrey_slots">#1E1D1D</color>
+    <color name="green_slots">#6EE50F</color>
+    <color name="red_slots">#FF0101</color>
+    <color name="orange_slots">#FFA500</color>
 </resources>

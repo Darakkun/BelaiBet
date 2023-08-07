@@ -36,10 +36,10 @@ import java.util.Date
 
 class WebActivity : AppCompatActivity() {
 
-    private val cookie: CookieManager by lazy { CookieManager.getInstance() }
+    private val cookie_slots: CookieManager by lazy { CookieManager.getInstance() }
     private lateinit var sPref : SharedPreferences
     private lateinit var editor: SharedPreferences.Editor
-    private var webSite: WebView? = null
+    private var webSite_belaiBet: WebView? = null
     private var pathFileCall: ValueCallback<Array<Uri>>? = null
     private var pathCamera: String? = null
 
@@ -47,21 +47,21 @@ class WebActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.online_activity)
-        webSite = findViewById(R.id.website)
-        sPref = applicationContext.getSharedPreferences("MyPref", 0)
+        webSite_belaiBet = findViewById(R.id.website)
+        sPref = applicationContext.getSharedPreferences("MyPref_belaibet", 0)
         editor = sPref.edit()
-        makeSettings(webSite!!.settings)
+        makeSettings(webSite_belaiBet!!.settings)
         CookieManager.getInstance().setAcceptCookie(true)
-        cookie.setAcceptCookie(true)
-        cookie.setAcceptThirdPartyCookies(webSite, true);
+        cookie_slots.setAcceptCookie(true)
+        cookie_slots.setAcceptThirdPartyCookies(webSite_belaiBet, true);
 
-        webSite!!.webViewClient = CheckClient()
-        webSite!!.webChromeClient = ClientChrome()
+        webSite_belaiBet!!.webViewClient = CheckClient()
+        webSite_belaiBet!!.webChromeClient = ClientChrome()
 
         if (savedInstanceState != null)
-            webSite?.restoreState(savedInstanceState)
-        else sPref.getString("url",null)?.let { webSite?.loadUrl(it) }
-//        else webSite?.loadUrl("www.pin-up664.com")
+            webSite_belaiBet?.restoreState(savedInstanceState)
+        else sPref.getString("url_slots",null)?.let { webSite_belaiBet?.loadUrl(it) }
+//        else webSite_belaiBet?.loadUrl("www.pin-up664.com")
     }
 
     private fun makeSettings(settings: WebSettings){
@@ -74,15 +74,15 @@ class WebActivity : AppCompatActivity() {
 
     }
     override fun onSaveInstanceState(outState: Bundle) {
-        webSite?.saveState(outState)
+        webSite_belaiBet?.saveState(outState)
         pathCamera=null
         super.onSaveInstanceState(outState)
     }
 
 
     override fun onBackPressed() {
-        if (webSite!!.canGoBack()) {
-            webSite!!.goBack()
+        if (webSite_belaiBet!!.canGoBack()) {
+            webSite_belaiBet!!.goBack()
         } else {
 
         }
@@ -129,13 +129,13 @@ class WebActivity : AppCompatActivity() {
 
         override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
             super.onPageStarted(view, url, favicon)
-            cookie.setCookie(url, sPref.getString("cookie",null))
+            cookie_slots.setCookie(url, sPref.getString("cookie_slots",null))
         }
 
         override fun onPageFinished(view: WebView?, url: String?) {
             super.onPageFinished(view, url)
             CookieManager.getInstance().flush()
-            editor.putString("cookie",cookie.getCookie(url))
+            editor.putString("cookie_slots",cookie_slots.getCookie(url))
         }
     }
 
@@ -286,7 +286,7 @@ class WebActivity : AppCompatActivity() {
             pathFileCall = null
         } catch (e: java.lang.Exception) {
             Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
-            Log.e("chooser", e.toString())
+            Log.e("chooser_text", e.toString())
         }
     }
 

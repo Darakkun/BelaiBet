@@ -4,6 +4,6 @@
     android:shape="rectangle">
     <stroke
         android:width="7dp"
-        android:color="@color/green" />
+        android:color="@color/green_slots" />
     <corners android:radius="8dp" />
 </shape>

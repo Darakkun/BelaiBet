@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
     <ImageView
-        android:id="@+id/main_theme"
+        android:id="@+id/main_theme_belaibet"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
@@ -13,7 +13,7 @@
         />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/slots_wheel"
+        android:id="@+id/slots_wheel_belaibet"
         android:layout_width="350dp"
         android:layout_height="300dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -31,26 +31,26 @@
             android:orientation="horizontal"
             >
             <ImageView
-                android:id="@+id/firstTable"
+                android:id="@+id/firstTable_belaibet"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 app:srcCompat="@drawable/line1" />
             <ImageView
-                android:id="@+id/secondTable"
+                android:id="@+id/secondTable_belaibet"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 app:srcCompat="@drawable/line2" />
             <ImageView
-                android:id="@+id/thirdTable"
+                android:id="@+id/thirdTable_belaibet"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 app:srcCompat="@drawable/line3" />
         </LinearLayout>
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rec_slots"
+        android:id="@+id/recycler_for_slots_belaibet"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -62,13 +62,13 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 <ImageView
-    android:id="@+id/winbracket"
+    android:id="@+id/win_bracket_belaibet"
     android:layout_width="350dp"
     android:layout_height="100dp"
     android:src="@drawable/square777"
     android:visibility="invisible"
-    app:layout_constraintStart_toStartOf="@id/slots_wheel"
-    app:layout_constraintTop_toTopOf="@id/slots_wheel"
+    app:layout_constraintStart_toStartOf="@id/slots_wheel_belaibet"
+    app:layout_constraintTop_toTopOf="@id/slots_wheel_belaibet"
     />
 
     <LinearLayout
@@ -78,7 +78,7 @@
         android:layout_marginTop="40dp"
         android:background="@drawable/square_button"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/slots_wheel">
+        app:layout_constraintTop_toBottomOf="@id/slots_wheel_belaibet">
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/minusBet"
@@ -89,21 +89,21 @@
             android:text="-"
             android:textSize="30sp"
             android:textAlignment="center"
-            android:textColor="@color/green"
+            android:textColor="@color/green_slots"
             />
         <TextView
             android:id="@+id/currentBet"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:textSize="30sp"
-            android:textColor="@color/white"
+            android:textColor="@color/white_slots"
             android:textAlignment="center"
             android:text="1"
             android:layout_weight="1"
             />
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/plusBet"
+            android:id="@+id/plusBet_belaibet"
             android:background="@android:color/transparent"
             android:layout_width="50dp"
             android:layout_height="50dp"
@@ -111,33 +111,33 @@
             android:text="+"
             android:textSize="30sp"
             android:textAlignment="center"
-            android:textColor="@color/green"
+            android:textColor="@color/green_slots"
             />
 
     </LinearLayout>
 
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/spinButton"
+        android:id="@+id/spinButton_belaibet"
         android:background="@drawable/square_button"
         android:layout_width="140dp"
         android:layout_height="48dp"
         android:text="SPIN"
         android:textSize="30sp"
         android:textAlignment="center"
-        android:textColor="@color/green"
+        android:textColor="@color/green_slots"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/slots_wheel"
+        app:layout_constraintTop_toBottomOf="@id/slots_wheel_belaibet"
         android:layout_marginEnd="50dp"
         android:layout_marginTop="40dp"
         />
 
     <TextView
-        android:id="@+id/scorePanel"
+        android:id="@+id/scorePanel_belaibet"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:background="@drawable/golden_panel"
-        android:textColor="@color/black"
+        android:textColor="@color/black_slots"
         android:textAlignment="center"
         android:text="500"
         android:textSize="30dp"
@@ -153,10 +153,10 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:src="@drawable/golden_circle"
-        app:layout_constraintBottom_toBottomOf="@id/scorePanel"
-        app:layout_constraintTop_toTopOf="@+id/scorePanel"
-        app:layout_constraintEnd_toStartOf="@id/scorePanel"
-        app:layout_constraintStart_toStartOf="@id/scorePanel"
+        app:layout_constraintBottom_toBottomOf="@id/scorePanel_belaibet"
+        app:layout_constraintTop_toTopOf="@+id/scorePanel_belaibet"
+        app:layout_constraintEnd_toStartOf="@id/scorePanel_belaibet"
+        app:layout_constraintStart_toStartOf="@id/scorePanel_belaibet"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

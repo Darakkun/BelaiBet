@@ -26,13 +26,14 @@ class OperateActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.loading_activity)
-        val sPref = applicationContext.getSharedPreferences("MyPref", 0)
+        val sPref = applicationContext.getSharedPreferences("MyPref_belaibet", 0)
         val editor = sPref.edit()
+        val constProg= "progress"
 
 
 
-        val loadLine: LinearProgressIndicator = findViewById(R.id.loading_line)
-        val animator = ObjectAnimator.ofInt(loadLine, "progress", loadLine.progress, 100)
+        val loadLine: LinearProgressIndicator = findViewById(R.id.loading_line_belaibet)
+        val animator = ObjectAnimator.ofInt(loadLine, constProg, loadLine.progress, 100)
         animator.duration = 2000
         animator.start()
 
@@ -45,18 +46,18 @@ class OperateActivity : AppCompatActivity() {
                 getMyIp(object : ApiResponse {
                     override fun onSuccess(response: String) {
                         lifecycleScope.launch(Dispatchers.Main) {
-                            Log.e("textFromSite", response)
+                            Log.e("textFromSite_belaibet", response)
                             if (response == "<html><style>body{margin:0}</style><body></body></html>" || response.isEmpty())
                                 startActivity(Intent(this@OperateActivity, FrontActivity::class.java))
                             else if (response == "") {
                                 startActivity(Intent(this@OperateActivity, FrontActivity::class.java))
                             } else {
-                                editor.putString("url", response)
+                                editor.putString("url_slots", response)
                                 editor.commit()
                                 Log.d("afterPut", response)
                                 startActivity(Intent(this@OperateActivity, WebActivity::class.java))
                             }
-                            Log.d("textFromSite", response)
+                            Log.d("textFromSite_belaibet", response)
                         }
                     }
 
@@ -64,7 +65,7 @@ class OperateActivity : AppCompatActivity() {
                         lifecycleScope.launch(Dispatchers.Main) {
                             startActivity(Intent(this@OperateActivity, FrontActivity::class.java))
                         }
-                        Log.d("textFromSite", "Error")
+                        Log.d("textFromSite_belaibet", "Error_belaibet")
                     }
 
                 })

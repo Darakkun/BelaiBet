@@ -13,10 +13,10 @@
         tools:layout="@layout/game_start_layout">
         <action
             android:id="@+id/action_GameStartFragment_to_SlotsFragment"
-            app:enterAnim="@anim/alpha_in"
-            app:exitAnim="@anim/alpha_out"
-            app:popEnterAnim="@anim/alpha_in"
-            app:popExitAnim="@anim/alpha_out"
+            app:enterAnim="@anim/alpha_in_animation_belaibet"
+            app:exitAnim="@anim/alpha_out_animation_belaibet"
+            app:popEnterAnim="@anim/alpha_in_animation_belaibet"
+            app:popExitAnim="@anim/alpha_out_animation_belaibet"
             app:destination="@id/Slots_fragment" />
     </fragment>
 
@@ -28,10 +28,10 @@
         tools:layout="@layout/slots_layout" >
         <action
             android:id="@+id/action_SlotsFragment_to_SlotsResultFragment"
-            app:enterAnim="@anim/alpha_in"
-            app:exitAnim="@anim/alpha_out"
-            app:popEnterAnim="@anim/alpha_in"
-            app:popExitAnim="@anim/alpha_out"
+            app:enterAnim="@anim/alpha_in_animation_belaibet"
+            app:exitAnim="@anim/alpha_out_animation_belaibet"
+            app:popEnterAnim="@anim/alpha_in_animation_belaibet"
+            app:popExitAnim="@anim/alpha_out_animation_belaibet"
             app:destination="@id/Slots_result_fragment" />
     </fragment>
 
@@ -42,10 +42,10 @@
         tools:layout="@layout/slots_result_layout" >
         <action
             android:id="@+id/action_SlotsResultFragment_to_GameStartFragment"
-            app:enterAnim="@anim/alpha_in"
-            app:exitAnim="@anim/alpha_out"
-            app:popEnterAnim="@anim/alpha_in"
-            app:popExitAnim="@anim/alpha_out"
+            app:enterAnim="@anim/alpha_in_animation_belaibet"
+            app:exitAnim="@anim/alpha_out_animation_belaibet"
+            app:popEnterAnim="@anim/alpha_in_animation_belaibet"
+            app:popExitAnim="@anim/alpha_out_animation_belaibet"
             app:destination="@id/Game_start_fragment" />
     </fragment>
 

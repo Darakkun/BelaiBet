@@ -27,8 +27,12 @@ class GameStartFragment:Fragment() {
     }
 
     override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+        try {
+            super.onDestroyView()
+            _binding = null
+        } catch (e:Exception) {
+
+        }
     }
 
 }

@@ -25,6 +25,7 @@ class SlotsIconsAdapter(private val intList: List<Int>) :
 
     override fun onBindViewHolder(viewHolder: IconViewHolder, pos: Int) {
         try {
+            viewHolder.doNothing()
             val icon = intList[pos]
             viewHolder.connect(icon)
         }catch (e:Exception){
@@ -34,14 +35,31 @@ class SlotsIconsAdapter(private val intList: List<Int>) :
     }
 
     override fun getItemCount(): Int {
-        return intList.size
+        return try {
+            intList.size
+        } catch (e:Exception){
+            0
+        }
+
     }
 
     inner class IconViewHolder(iconView: View) : RecyclerView.ViewHolder(iconView) {
         private val slotView: ImageView = iconView.findViewById(R.id.slot_icon)
 
+        fun doNothing(){
+            try {
+                val a = 150
+            }catch (e:Exception)
+            {}
+        }
+
         fun connect(iconSlot: Int) {
-            slotView.setImageResource(iconSlot)
+            try {
+                slotView.setImageResource(iconSlot)
+            } catch (e:Exception){
+
+            }
+
         }
     }
 }

@@ -17,12 +17,16 @@ class SlotsResultFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding =  SlotsResultLayoutBinding.inflate(inflater, container, false)
-        binding.scorePanel.text= (arguments?.getInt("amount")?.times(7)).toString()
+        binding.scorePanelBelaibet.text= (arguments?.getInt("amount_belaibet")?.times(7)).toString()
         return binding.root
     }
 
     override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+        try {
+            super.onDestroyView()
+            _binding = null
+        } catch (e:Exception) {
+
+        }
     }
 }

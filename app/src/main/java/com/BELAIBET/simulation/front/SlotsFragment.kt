@@ -6,12 +6,10 @@ import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.BELAIBET.simulation.R
 import com.BELAIBET.simulation.databinding.SlotsLayoutBinding
 import java.util.Random
@@ -36,23 +34,23 @@ class SlotsFragment : Fragment() {
 
         _binding = SlotsLayoutBinding.inflate(inflater, container, false)
         gridManger = GridLayoutManager(this.requireContext(), 3)
-        binding.recSlots.layoutManager = gridManger
+        binding.recyclerForSlotsBelaibet.layoutManager = gridManger
         iconSlotsList = buildSlotsList()
         slotsIconsAdapter = SlotsIconsAdapter(iconSlotsList)
-        binding.recSlots.adapter = slotsIconsAdapter
+        binding.recyclerForSlotsBelaibet.adapter = slotsIconsAdapter
 
-        binding.spinButton.setOnClickListener {
+        binding.spinButtonBelaibet.setOnClickListener {
             numberOfShufles++
             if (numberOfShufles == maxNumberOfShufles) {
                 val position = 50
-                binding.recSlots.smoothScrollToPosition(position)
+                binding.recyclerForSlotsBelaibet.smoothScrollToPosition(position)
                 iconSlotsList = createFakeList()
                 slotsIconsAdapter = SlotsIconsAdapter(iconSlotsList)
-                binding.recSlots.adapter = slotsIconsAdapter
-                binding.winbracket.visibility=View.VISIBLE
+                binding.recyclerForSlotsBelaibet.adapter = slotsIconsAdapter
+                binding.winBracketBelaibet.visibility=View.VISIBLE
                 Handler(Looper.getMainLooper()).postDelayed({
                     val bundle = Bundle()
-                    bundle.putInt("amount", currentBet*500)
+                    bundle.putInt("amount_belaibet", currentBet*500)
                     findNavController().navigate(R.id.Slots_result_fragment, bundle)
                 }, 2000)
 
@@ -61,21 +59,21 @@ class SlotsFragment : Fragment() {
 //                modelProvider.currentScore += position
                 iconSlotsList = buildSlotsList()
                 slotsIconsAdapter = SlotsIconsAdapter(iconSlotsList)
-                binding.recSlots.adapter = slotsIconsAdapter
-                binding.recSlots.smoothScrollToPosition(position)
+                binding.recyclerForSlotsBelaibet.adapter = slotsIconsAdapter
+                binding.recyclerForSlotsBelaibet.smoothScrollToPosition(position)
             }
         }
 
         binding.minusBet.setOnClickListener {
             if (currentBet > 0) currentBet--
             binding.currentBet.text = currentBet.toString()
-            binding.scorePanel.text = (currentBet*500).toString()
+            binding.scorePanelBelaibet.text = (currentBet*500).toString()
         }
 
-        binding.plusBet.setOnClickListener {
+        binding.plusBetBelaibet.setOnClickListener {
             if (currentBet < 10) currentBet++
             binding.currentBet.text = currentBet.toString()
-            binding.scorePanel.text = (currentBet*500).toString()
+            binding.scorePanelBelaibet.text = (currentBet*500).toString()
         }
 
 
